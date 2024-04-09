@@ -1,7 +1,7 @@
 'use client';
 import React, { useRef, useEffect, useReducer } from 'react';
 import { Card, CardHeader, CardBody,Input } from '@nextui-org/react';
-import { SetMoveremoveTodo, setManipulateStatusCard, setManipulateStatusJumlahBahan, setManipulateTatacara, setMoveDataAddForTatacara, setMoveUpdateData, setMoveUpdateKeteranganTatacaraData, } from '@/redux/features/todo-slice';
+import { SetMoveremoveTodo, SetremoveTatacara, setManipulateStatusCard, setManipulateStatusJumlahBahan, setManipulateTatacara, setMoveDataAddForTatacara, setMoveUpdateData, setMoveUpdateKeteranganTatacaraData, } from '@/redux/features/todo-slice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsFillTrashFill, BsPencil } from 'react-icons/bs';
@@ -81,10 +81,15 @@ const TodoList: React.FC = () => {
     // 180000 milidetik = 3 menit
   }
 
-  const handleUpdateTatacara = (event: any, id: any) => { // fungsi untuk setting perubahan status saat card bahan diklik maka akan menampilkan buttonnya lalu menghide berdasarkan waktu tertentu secara otomatis saat tidak di klik
+  const handleUpdateTatacara = (event: any, id: any) => { 
+    let weightInput = event.target.value;// fungsi untuk setting perubahan status saat card bahan diklik maka akan menampilkan buttonnya lalu menghide berdasarkan waktu tertentu secara otomatis saat tidak di klik
     if (event.key === 'Enter' && event.target.value !== "" || event.type === 'blur' && event.target.value !== "") {
-      let weightInput = event.target.value;
+      
       dispatch(setMoveUpdateKeteranganTatacaraData({ id: id, keterangan: weightInput }));
+      dispatch(setManipulateTatacara(false));
+    }else if(event.key === 'Enter' && event.target.value === "" && weightInput === "" || event.type === 'blur' && event.target.value === "" && weightInput === "" ){
+      console.log(weightInput);
+      dispatch(SetremoveTatacara({ id: id, keterangan:weightInput }));
       dispatch(setManipulateTatacara(false));
     }
 

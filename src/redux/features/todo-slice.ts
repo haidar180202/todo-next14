@@ -151,6 +151,16 @@ export const todo = createSlice({
       }
 
     },
+
+    SetremoveTatacara: (state, action) => {
+      // const todoIndex = state.tatacara.find((todo) => todo.name === action.payload.name);
+      const tatacara = state.tatacara.findIndex(tatacara => tatacara.id === action.payload.id);
+      if (tatacara !== -1 ) {
+        // state.list.push(action.payload);
+        state.tatacara.splice(tatacara, 1);
+      }
+
+    },
     
 
     
@@ -159,5 +169,5 @@ export const todo = createSlice({
 
 // Exporting actions and reducer
 // removeTodo, toggleTodo,
-export const { addTodo, setMoveLocationTodo,SetMoveremoveTodo,setMoveUpdateData,setMoveDataAddForTatacara,setManipulateStatusCard,setManipulateTatacara,setManipulateStatusJumlahBahan,setMoveUpdateKeteranganTatacaraData } = todo.actions;
+export const { addTodo, setMoveLocationTodo,SetMoveremoveTodo,setMoveUpdateData,setMoveDataAddForTatacara,setManipulateStatusCard,setManipulateTatacara,setManipulateStatusJumlahBahan,setMoveUpdateKeteranganTatacaraData,SetremoveTatacara } = todo.actions;
 export default todo.reducer;
