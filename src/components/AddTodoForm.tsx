@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import {
   Card,
   CardHeader,
@@ -16,20 +16,18 @@ import { BsFillTrashFill } from 'react-icons/bs';
 
 const AddTodoForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [todo, setTodo] = useState<string>();
-
-  const [errorMessage, setErrorMessage] = useState<string>();
+  const todoRef = useRef<string | null>(null); // Menggunakan useRef untuk todo
+  const errorMessageRef = useRef<string | null>(null); // Menggunakan useRef untuk errorMessage
 
   const handleSubmit = () => {
+    const todo = todoRef.current;
     if (!todo) {
-
-      setErrorMessage('Task name is required');
+      errorMessageRef.current = 'Task name is required';
       return;
     }
     dispatch(addTodo({ id: Date.now(), name: todo, done: false }));
-    setTodo('');
-
-    setErrorMessage(undefined);
+    todoRef.current = ''; // Mengubah nilai menggunakan ref
+    errorMessageRef.current = null; // Mengubah nilai menggunakan ref
   };
 
   const { list } = useSelector((state: RootState) => state.todoReducer);
@@ -76,9 +74,9 @@ const AddTodoForm: React.FC = () => {
           <Input
             isRequired
             label="Task Name"
-            value={todo}
-            onValueChange={setTodo}
-            errorMessage={errorMessage}
+            value={todoRef.current === null ? undefined : todoRef.current}
+            onValueChange={(newValue) => (todoRef.current = newValue)} // Mengubah nilai menggunakan ref
+            errorMessage={errorMessageRef.current}
             variant="bordered"
           />
         </CardBody>
