@@ -81,6 +81,17 @@ const TodoList: React.FC = () => {
     // 180000 milidetik = 3 menit
   }
 
+  const SetUbahStatusCard = () => { // fungsi untuk setting perubahan status saat card bahan diklik maka akan menampilkan buttonnya lalu menghide berdasarkan waktu tertentu secara otomatis saat tidak di klik
+    // clickedIndexRefForEditTatacara.current = index;
+
+    dispatch(setManipulateTatacara(false));
+    dispatch(setManipulateStatusJumlahBahan(false));
+
+    // Set timeout untuk menyembunyikan kembali data setelah 3 menit
+    // 180000 milidetik = 3 menit
+  }
+  
+
   const handleUpdateTatacara = (event: any, id: any) => { 
     let weightInput = event.target.value;// fungsi untuk setting perubahan status saat card bahan diklik maka akan menampilkan buttonnya lalu menghide berdasarkan waktu tertentu secara otomatis saat tidak di klik
     if (event.key === 'Enter' && event.target.value !== "" || event.type === 'blur' && event.target.value !== "") {
@@ -97,7 +108,7 @@ const TodoList: React.FC = () => {
 
 
   return (
-    <Card className="p-4">
+    <Card className="p-4" onClick={()=> SetUbahStatusCard}>
       <CardHeader className="flex justify-center items-center">
         <div className="flex flex-col justify-center items-center">
           <p className="text-lg font-bold text-center">Nama Resep (Input)</p>
